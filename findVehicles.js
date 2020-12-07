@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-fs.readFile("./analyst.json", (err, data) => {
+fs.readFile("./data/analyst.json", (err, data) => {
   if (!err) {
     let array = JSON.parse(data);
     let finalData = array.reduce((acc, item) => {
@@ -17,8 +17,9 @@ fs.readFile("./analyst.json", (err, data) => {
     }, {});
     let objectKeys = Object.keys(finalData);
     objectKeys.map((key) => {
+      fs.existsSync("./output/vehicles") || fs.mkdirSync("./output/vehicles");
       fs.writeFile(
-        `./vehicles/${key}.json`,
+        `./output/vehicles/${key}.json`,
         JSON.stringify(finalData[key]),
         function (err) {
           if (err) throw err;
