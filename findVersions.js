@@ -9,21 +9,22 @@ fs.readFile("./output/analyst.json", (err, data) => {
         item["user"].includes("syed") &&
         !(device && device.includes("realme 3 Pro")) &&
         item["apk_version"] === "v0.9.14";
+      let androidVersion = item["device_version"] || item["android_version"];
       item["vehicle"] = item["error_description"].match(/KA(.{11})/)[0];
       if (user) {
-        if (acc[device]) {
-          acc[device].push(item);
+        if (acc[androidVersion]) {
+          acc[androidVersion].push(item);
         } else {
-          acc[device] = [item];
+          acc[androidVersion] = [item];
         }
       }
       return acc;
     }, {});
     let objectKeys = Object.keys(finalData);
     objectKeys.map((key) => {
-      fs.existsSync("./output/mobiles") || fs.mkdirSync("./output/mobiles");
+      fs.existsSync("./output/versions") || fs.mkdirSync("./output/versions");
       fs.writeFile(
-        `./output/mobiles/${key}.json`,
+        `./output/versions/${key}.json`,
         JSON.stringify(finalData[key]),
         function (err) {
           if (err) throw err;

@@ -2,7 +2,7 @@ import os
 import re
 regex_str = re.compile('Date: (?P<time>.*) -0000')
 
-basepath = './data' # maybe just '.'
+basepath = './newData' # maybe just '.'
 for dir_name in os.listdir(basepath):
     dir_path = os.path.join(basepath, dir_name)
     if not os.path.isdir(dir_path):
